@@ -9,7 +9,7 @@ import (
 )
 
 //RoutesProducts aa
-func RoutesProducts(conn *database.Data) http.Handler {
+func RoutesProducts(conn *database.DataDB) http.Handler {
 	router := chi.NewRouter()
 	products := v1Product.NewProductHandler(conn) //domain
 	router.Mount("/products", routesProduct(products))

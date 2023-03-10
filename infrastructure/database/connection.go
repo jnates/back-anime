@@ -12,17 +12,17 @@ import (
 )
 
 var (
-	data *Data
+	data *DataDB
 	once sync.Once
 )
 
 //Data aa
-type Data struct {
+type DataDB struct {
 	DB *sql.DB
 }
 
 // New returns a new instance of Data with the database connection ready.
-func New() *Data {
+func New() *DataDB {
 	once.Do(initDB)
 	return data
 }
@@ -39,7 +39,7 @@ func initDB() {
 		log.Fatal(err)
 	}
 
-	data = &Data{
+	data = &DataDB{
 		DB: db,
 	}
 }

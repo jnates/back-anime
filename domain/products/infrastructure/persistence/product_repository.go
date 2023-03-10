@@ -10,11 +10,11 @@ import (
 )
 
 type sqlProductRepo struct {
-	Conn *database.Data
+	Conn *database.DataDB
 }
 
 //NewProductRepository aaa
-func NewProductRepository(Conn *database.Data) repoDomain.ProductRepository {
+func NewProductRepository(Conn *database.DataDB) repoDomain.ProductRepository {
 	return &sqlProductRepo{
 		Conn: Conn,
 	}
