@@ -11,7 +11,7 @@ type ProductRepository interface {
 	CreateProductHandler(ctx context.Context, product *model.Product) (*response.ProductCreateResponse, error)
 }
 
-//GetAllProducts type
-type GetAllProducts interface {
-	GetALLHandler(ctx context.Context, product *model.Product) (*response.ProductALLResponse, error)
-}
+//// GetAllProducts es la interfaz que define el método para obtener todos los productos.
+//type GetAllProducts interface {
+//	GetAllProductsHandler(ctx context.Context) (*response.ProductGetResponse, error)
+//}

@@ -38,18 +38,26 @@ func (sr *sqlProductRepo) CreateProductHandler(ctx context.Context, product *mod
 	return &ProductResponse, nil
 }
 
-// func (sr *sqlProductRepo) GetAllProducts(ctx context.Context, product *model.Product) (*response.ProductALLResponse, error) {
-// 	stmt, err := sr.Conn.DB.PrepareContext(ctx, insertProduct)
-// 	if err != nil {
-// 		return &response.ProductALLResponse{}, err
-// 	}
-// 	defer stmt.Close()
-// 	row := stmt.QueryRowContext(ctx, &product.ProductoID, &product.ProductoNombre, &product.ProductoCantidad, &product.ProductoUsercreacion, &product.ProductoUserModificacion)
-// 	var idResult string
-// 	err = row.Scan(&idResult)
-// 	if err != sql.ErrNoRows {
-// 		return &response.ProductALLResponse{}, err
-// 	}
-// 	ProductAllResponse :=  [] response.ProductCreateResponse{}
-// 	return &[]ProductAllResponse, nil
-// }
+//func (sr *sqlProductRepo) GetProductByIDHandler(ctx context.Context, productID string) (*response.ProductResponse, error) {
+//	stmt, err := sr.Conn.DB.PrepareContext(ctx, SelectProductByID)
+//	if err != nil {
+//		return &response.ProductResponse{}, err
+//	}
+//	defer stmt.Close()
+//	product := &model.Product{}
+//	row := stmt.QueryRowContext(ctx, productID)
+//	err = row.Scan(&product.ProductID, &product.ProductName, &product.ProductAmount, &product.ProductUserCreated, &product.ProductDateCreated, &product.ProductUserModify, &product.ProductDateModify)
+//	if err != nil {
+//		if err == sql.ErrNoRows {
+//			return &response.ProductResponse{
+//				Message: fmt.Sprintf("Product with ID %s not found", productID),
+//			}, nil
+//		} else {
+//			return &response.ProductResponse{}, err
+//		}
+//	}
+//	productResp := response.ProductResponse{
+//		Product: product,
+//	}
+//	return &productResp, nil
+//}
