@@ -20,6 +20,5 @@ func RoutesProducts(conn *database.DataDB) http.Handler {
 func routesProduct(handler *v1.ProductRouter) http.Handler {
 	router := chi.NewRouter()
 	router.Post("/", handler.CreateProductHandler)
-	// router.Post("/productAll", handler.)
 	return router
 }
