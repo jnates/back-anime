@@ -1,9 +1,9 @@
--- CREATE TABLE TYPE-IDENTIFIER
+-- Creates a table for storing identification types
 -- Table: public.type_identifiers
 
 -- DROP TABLE public.type_identifiers;
 
--- Creates a table for storing identification types
+
 CREATE TABLE public.types_identifiers
 (
     type_id integer NOT NULL,
@@ -26,12 +26,12 @@ COMMENT ON COLUMN public.types_identifiers.type_description
     IS 'Description of the identification type';
 
 
--- CREATE TABLE USERS
+-- Creates a table for storing user information
 -- Table: public.users
 
 -- DROP TABLE public.users;
 
--- Creates a table for storing user information
+
 CREATE TABLE public.users
 (
     user_id integer NOT NULL,
@@ -78,12 +78,12 @@ COMMENT ON COLUMN public.users.user_type_identifier
     IS 'User identification document type';
 
 
--- CREATE TABLE PRODUCTS
+-- Creates a table for storing product information
 -- -- Table: public.products
 
 -- DROP TABLE public.products;
 
--- Creates a table for storing product information
+
 CREATE TABLE public.products
 (
     product_id integer NOT NULL,
