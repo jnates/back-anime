@@ -1,8 +1,8 @@
 package repository
 
 import (
-	response "backend_crudgo/cmd/aplication/v1/response"
 	"backend_crudgo/domain/products/domain/model"
+	response "backend_crudgo/types"
 	"context"
 )
 

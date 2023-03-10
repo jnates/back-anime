@@ -1,10 +1,10 @@
 package persistence
 
 import (
-	"backend_crudgo/cmd/aplication/v1/response"
 	"backend_crudgo/domain/products/domain/model"
 	repoDomain "backend_crudgo/domain/products/domain/repository"
 	"backend_crudgo/infrastructure/database"
+	response "backend_crudgo/types"
 	"context"
 	"database/sql"
 )
@@ -21,7 +21,7 @@ func NewProductRepository(Conn *database.DataDB) repoDomain.ProductRepository {
 }
 
 func (sr *sqlProductRepo) CreateProductHandler(ctx context.Context, product *model.Product) (*response.ProductCreateResponse, error) {
-	stmt, err := sr.Conn.DB.PrepareContext(ctx, insertProduct)
+	stmt, err := sr.Conn.DB.PrepareContext(ctx, InsertProduct)
 	if err != nil {
 		return &response.ProductCreateResponse{}, err
 	}
