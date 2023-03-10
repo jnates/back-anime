@@ -25,7 +25,6 @@ COMMENT ON COLUMN public.types_identifiers.type_id
 COMMENT ON COLUMN public.types_identifiers.type_description
     IS 'Description of the identification type';
 
-
 -- Creates a table for storing user information
 -- Table: public.users
 
@@ -76,7 +75,6 @@ COMMENT ON COLUMN public.users.user_password
 -- Adds a comment for the 'user_type_identifier' column
 COMMENT ON COLUMN public.users.user_type_identifier
     IS 'User identification document type';
-
 
 -- Creates a table for storing product information
 -- -- Table: public.products
@@ -136,3 +134,4 @@ COMMENT ON COLUMN public.products.product_date_modify
 
 COMMENT ON COLUMN public.products."product_user_modify"
     IS 'Date of user modification';
+    
