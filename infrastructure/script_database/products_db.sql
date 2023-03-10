@@ -1,43 +1,43 @@
--- CREA TABLA TIPOS_DOCUMENTOS
--- Table: public.tipos_documentos
+-- CREATE TABLE TYPE-IDENTIFIER
+-- Table: public.type_identifiers
 
--- DROP TABLE public.tipos_documentos;
+-- DROP TABLE public.type_identifiers;
 
-CREATE TABLE public.tipos_documentos
+CREATE TABLE public.types_identifiers
 (
-    tido_id integer NOT NULL,
-    tido_descripcion character varying COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT tipo_documento_pkey PRIMARY KEY (tido_id)
+    type_id integer NOT NULL,
+    type_description character varying COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT types_identifiers._pkey PRIMARY KEY (type_id)
 )
 
 TABLESPACE pg_default;
 
-ALTER TABLE public.tipos_documentos
+ALTER TABLE public.types_identifiers
     OWNER to postgres;
 
-COMMENT ON COLUMN public.tipos_documentos.tido_id
-    IS 'Tipo de documento';
+COMMENT ON COLUMN public.types_identifiers.type_id
+    IS 'Tipo de identificación del personaje';
 
-COMMENT ON COLUMN public.tipos_documentos.tido_descripcion
-    IS 'Descripción del tipo de documento';
+COMMENT ON COLUMN public.types_identifiers.type_description
+    IS 'Descripción del tipo de identificador';
 
--- CREA TABLA USUARIOS 
+-- CREATE TABLE USUARIOS
 -- Table: public.usuarios
 
 -- DROP TABLE public.usuarios;
 
-CREATE TABLE public.usuarios
+CREATE TABLE public.users
 (
     user_id integer NOT NULL,
-    user_nombres character varying(255) COLLATE pg_catalog."default" NOT NULL,
-    "user.apellidos" character varying(255) COLLATE pg_catalog."default" NOT NULL,
-    user_nrodocumento integer NOT NULL,
+    user_name character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    "user.pronoun" character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    user_identifier integer NOT NULL,
     user_email character varying(255) COLLATE pg_catalog."default" NOT NULL,
     user_password character varying(255) COLLATE pg_catalog."default" NOT NULL,
-    user_tipodocumento integer NOT NULL,
+    user_type_identifier integer NOT NULL,
     CONSTRAINT users_pkey PRIMARY KEY (user_id),
-    CONSTRAINT fk_tipos_documentos FOREIGN KEY (user_tipodocumento)
-        REFERENCES public.tipos_documentos (tido_id) MATCH SIMPLE
+    CONSTRAINT fk_tipos_documentos FOREIGN KEY (user_type_identifier)
+        REFERENCES public.types_identifiers (type_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
@@ -45,52 +45,52 @@ CREATE TABLE public.usuarios
 
 TABLESPACE pg_default;
 
-ALTER TABLE public.usuarios
+ALTER TABLE public.users
     OWNER to postgres;
 
-COMMENT ON COLUMN public.usuarios.user_id
+COMMENT ON COLUMN public.users.user_id
     IS 'LLave primaria de Usuarios';
 
-COMMENT ON COLUMN public.usuarios.user_nombres
-    IS 'Nombre completo del Usuario';
+COMMENT ON COLUMN public.users.user_name
+    IS 'Nombre completo del Personaje';
 
-COMMENT ON COLUMN public.usuarios."user.apellidos"
-    IS 'Apellidos de Usuario';
+COMMENT ON COLUMN public.users."user.pronoun"
+    IS 'Pronombre de Usuario';
 
-COMMENT ON COLUMN public.usuarios.user_nrodocumento
-    IS 'Numero de documento de usuario';
+COMMENT ON COLUMN public.users.user_identifier
+    IS 'Numero de identificación de usuario';
 
-COMMENT ON COLUMN public.usuarios.user_email
+COMMENT ON COLUMN public.users.user_email
     IS 'Correo electronico del Usuario para el login';
 
-COMMENT ON COLUMN public.usuarios.user_password
+COMMENT ON COLUMN public.users.user_password
     IS 'Password de usuario para login';
 
-COMMENT ON COLUMN public.usuarios.user_tipodocumento
+COMMENT ON COLUMN public.users.user_type_identifier
     IS 'Tipo de documento de identificacion del usuario';
 
--- CREA TABLA PRODUCTOS
--- -- Table: public.productos
+-- CREATE TABLE PRODUCTS
+-- -- Table: public.products
 
--- DROP TABLE public.productos;
+-- DROP TABLE public.products;
 
-CREATE TABLE public.productos
+CREATE TABLE public.products
 (
-    producto_id integer NOT NULL,
-    producto_nombre character varying(255) COLLATE pg_catalog."default" NOT NULL,
-    producto_cantidad integer,
-    producto_usercreacion integer NOT NULL,
-    producto_fechcreacion timestamp(0) without time zone NOT NULL,
-    producto_usermodificacion integer NOT NULL,
-    "producto_fechamodificacion" timestamp(0) without time zone NOT NULL,
-    CONSTRAINT producto_pkey PRIMARY KEY (producto_id),
-    CONSTRAINT fk_user_creacion FOREIGN KEY (producto_usercreacion)
-        REFERENCES public.usuarios (user_id) MATCH SIMPLE
+    product_id integer NOT NULL,
+    product_name character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    product_amount integer,
+    product_user_created integer NOT NULL,
+    product_date_created timestamp(0) without time zone NOT NULL,
+    product_user_modify integer NOT NULL,
+    "product_date_modify" timestamp(0) without time zone NOT NULL,
+    CONSTRAINT producto_pkey PRIMARY KEY (product_id),
+    CONSTRAINT fk_user_creacion FOREIGN KEY (product_user_created)
+        REFERENCES public.users (user_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID,
-    CONSTRAINT fk_user_modificacion FOREIGN KEY (producto_usermodificacion)
-        REFERENCES public.usuarios (user_id) MATCH SIMPLE
+    CONSTRAINT fk_user_modificacion FOREIGN KEY (product_user_modify)
+        REFERENCES public.users (user_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
@@ -98,26 +98,26 @@ CREATE TABLE public.productos
 
 TABLESPACE pg_default;
 
-ALTER TABLE public.productos
+ALTER TABLE public.products
     OWNER to postgres;
 
-COMMENT ON COLUMN public.productos.producto_id
+COMMENT ON COLUMN public.products.product_id
     IS 'id del producto';
 
-COMMENT ON COLUMN public.productos.producto_nombre
+COMMENT ON COLUMN public.products.product_name
     IS 'Name del producto';
 
-COMMENT ON COLUMN public.productos.producto_cantidad
+COMMENT ON COLUMN public.products.product_amount
     IS 'Cantidad del producto';
 
-COMMENT ON COLUMN public.productos.producto_usercreacion
+COMMENT ON COLUMN public.products.product_user_created
     IS 'El usuario crea un producto';
 
-COMMENT ON COLUMN public.productos.producto_fechcreacion
+COMMENT ON COLUMN public.products.product_date_created
     IS 'Fecha de creación del producto';
 
-COMMENT ON COLUMN public.productos.producto_usermodificacion
+COMMENT ON COLUMN public.products.product_date_modify
     IS 'Fecha de  modificación del producto';
 
-COMMENT ON COLUMN public.productos."producto_fechamodificacion"
-    IS 'Fecha de modificación del producto';
+COMMENT ON COLUMN public.products."product_user_modify"
+    IS 'Fecha de modificación del user';
