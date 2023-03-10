@@ -38,10 +38,7 @@ func initDB() {
 	if err := db.Ping(); err != nil {
 		log.Fatal(err)
 	}
-
-	data = &DataDB{
-		DB: db,
-	}
+	data = &DataDB{DB: db}
 }
 
 func getConnection() (*sql.DB, error) {

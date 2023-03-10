@@ -1,4 +1,4 @@
-package response
+package types
 
 //ProductCreateResponse to message for response handler products.
 type ProductCreateResponse struct {
