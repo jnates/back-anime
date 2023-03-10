@@ -7,7 +7,7 @@ CREATE TABLE public.types_identifiers
 (
     type_id integer NOT NULL,
     type_description character varying COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT types_identifiers._pkey PRIMARY KEY (type_id)
+    CONSTRAINT types_identifiers_pkey PRIMARY KEY (type_id)
 )
 
 TABLESPACE pg_default;
@@ -21,26 +21,24 @@ COMMENT ON COLUMN public.types_identifiers.type_id
 COMMENT ON COLUMN public.types_identifiers.type_description
     IS 'Descripción del tipo de identificador';
 
--- CREATE TABLE USUARIOS
--- Table: public.usuarios
+-- CREATE TABLE USERS
+-- Table: public.users
 
--- DROP TABLE public.usuarios;
+-- DROP TABLE public.users;
 
 CREATE TABLE public.users
 (
     user_id integer NOT NULL,
     user_name character varying(255) COLLATE pg_catalog."default" NOT NULL,
-    "user.pronoun" character varying(255) COLLATE pg_catalog."default" NOT NULL,
     user_identifier integer NOT NULL,
     user_email character varying(255) COLLATE pg_catalog."default" NOT NULL,
     user_password character varying(255) COLLATE pg_catalog."default" NOT NULL,
     user_type_identifier integer NOT NULL,
     CONSTRAINT users_pkey PRIMARY KEY (user_id),
-    CONSTRAINT fk_tipos_documentos FOREIGN KEY (user_type_identifier)
+    CONSTRAINT fk_type_identifier FOREIGN KEY (user_type_identifier)
         REFERENCES public.types_identifiers (type_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
-        NOT VALID
 )
 
 TABLESPACE pg_default;
@@ -53,9 +51,6 @@ COMMENT ON COLUMN public.users.user_id
 
 COMMENT ON COLUMN public.users.user_name
     IS 'Nombre completo del Personaje';
-
-COMMENT ON COLUMN public.users."user.pronoun"
-    IS 'Pronombre de Usuario';
 
 COMMENT ON COLUMN public.users.user_identifier
     IS 'Numero de identificación de usuario';
@@ -83,13 +78,13 @@ CREATE TABLE public.products
     product_date_created timestamp(0) without time zone NOT NULL,
     product_user_modify integer NOT NULL,
     "product_date_modify" timestamp(0) without time zone NOT NULL,
-    CONSTRAINT producto_pkey PRIMARY KEY (product_id),
-    CONSTRAINT fk_user_creacion FOREIGN KEY (product_user_created)
+    CONSTRAINT product_pkey PRIMARY KEY (product_id),
+    CONSTRAINT fk_user_created FOREIGN KEY (product_user_created)
         REFERENCES public.users (user_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID,
-    CONSTRAINT fk_user_modificacion FOREIGN KEY (product_user_modify)
+    CONSTRAINT fk_user_modify FOREIGN KEY (product_user_modify)
         REFERENCES public.users (user_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
