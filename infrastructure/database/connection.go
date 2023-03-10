@@ -16,7 +16,7 @@ var (
 	once sync.Once
 )
 
-//Data aa
+// DataDB  is struct for library database/sql
 type DataDB struct {
 	DB *sql.DB
 }

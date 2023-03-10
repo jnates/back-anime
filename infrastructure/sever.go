@@ -25,7 +25,7 @@ func (srv *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 // newServer initialized a Routes Server with configuration.
-func newServer(port string, conn *database.Data) *Server {
+func newServer(port string, conn *database.DataDB) *Server {
 
 	router := chi.NewRouter()
 

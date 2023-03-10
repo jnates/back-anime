@@ -1,7 +1,7 @@
 package persistence
 
 import (
-	"backend_crudgo/domain/products/aplication/v1/response"
+	"backend_crudgo/cmd/aplication/v1/response"
 	"backend_crudgo/domain/products/domain/model"
 	repoDomain "backend_crudgo/domain/products/domain/repository"
 	"backend_crudgo/infrastructure/database"
@@ -26,7 +26,7 @@ func (sr *sqlProductRepo) CreateProductHandler(ctx context.Context, product *mod
 		return &response.ProductCreateResponse{}, err
 	}
 	defer stmt.Close()
-	row := stmt.QueryRowContext(ctx, &product.ProductoID, &product.ProductoNombre, &product.ProductoCantidad, &product.ProductoUsercreacion, &product.ProductoUserModificacion)
+	row := stmt.QueryRowContext(ctx, &product.ProductID, &product.ProductName, &product.ProductAmount, &product.ProductUserCreated, &product.ProductUserModify)
 	var idResult string
 	err = row.Scan(&idResult)
 	if err != sql.ErrNoRows {

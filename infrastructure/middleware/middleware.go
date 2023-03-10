@@ -3,12 +3,11 @@ package middleware
 import (
 	"bytes"
 	"fmt"
+	"github.com/go-chi/cors"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"strconv"
-
-	"github.com/go-chi/cors"
 )
 
 // CORSMiddleware
@@ -32,8 +31,8 @@ func CORSMiddleware(next http.Handler) http.Handler {
 	})
 }
 
-//Avoid a large file from loading into memory
-//If the file size is greater than 8MB dont allow it to even load into memory and waste our time.
+// MaxSizeAllowed Avoid a large file from loading into memory
+// If the file size is greater than 8MB dont allow it to even load into memory and waste our time.
 func MaxSizeAllowed(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()

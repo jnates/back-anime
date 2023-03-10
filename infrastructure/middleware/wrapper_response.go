@@ -12,7 +12,7 @@ type ErrorMessage struct {
 	Message string `json:"message"`
 }
 
-// ErrorMessage structure that returns group of errors
+// ErrorsMessage structure that returns group of errors
 type ErrorsMessage struct {
 	Status  int         `json:"status"`
 	Error   string      `json:"error"`
