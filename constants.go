@@ -1,5 +1,0 @@
-package backanime
-
-const (
-	emptyString = ""
-)

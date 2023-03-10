@@ -2,8 +2,6 @@
 ## explicit
 github.com/go-chi/chi
 github.com/go-chi/chi/middleware
-# github.com/go-chi/cors v1.1.1
-## explicit
 # github.com/joho/godotenv v1.3.0
 ## explicit
 github.com/joho/godotenv
