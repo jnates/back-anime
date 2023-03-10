@@ -3,6 +3,7 @@
 
 -- DROP TABLE public.type_identifiers;
 
+-- Creates a table for storing identification types
 CREATE TABLE public.types_identifiers
 (
     type_id integer NOT NULL,
@@ -12,20 +13,25 @@ CREATE TABLE public.types_identifiers
 
 TABLESPACE pg_default;
 
+-- Sets the owner of the table to 'postgres'
 ALTER TABLE public.types_identifiers
     OWNER to postgres;
 
+-- Adds a comment for the 'type_id' column
 COMMENT ON COLUMN public.types_identifiers.type_id
-    IS 'Tipo de identificación del personaje';
+    IS 'Identification type of character';
 
+-- Adds a comment for the 'type_description' column
 COMMENT ON COLUMN public.types_identifiers.type_description
-    IS 'Descripción del tipo de identificador';
+    IS 'Description of the identification type';
+
 
 -- CREATE TABLE USERS
 -- Table: public.users
 
 -- DROP TABLE public.users;
 
+-- Creates a table for storing user information
 CREATE TABLE public.users
 (
     user_id integer NOT NULL,
@@ -43,32 +49,41 @@ CREATE TABLE public.users
 
 TABLESPACE pg_default;
 
+-- Sets the owner of the table to 'postgres'
 ALTER TABLE public.users
     OWNER to postgres;
 
+-- Adds a comment for the 'user_id' column
 COMMENT ON COLUMN public.users.user_id
-    IS 'LLave primaria de Usuarios';
+    IS 'Primary key of Users';
 
+-- Adds a comment for the 'user_name' column
 COMMENT ON COLUMN public.users.user_name
-    IS 'Nombre completo del Personaje';
+    IS 'Full name of the Character';
 
+-- Adds a comment for the 'user_identifier' column
 COMMENT ON COLUMN public.users.user_identifier
-    IS 'Numero de identificación de usuario';
+    IS 'User identification number';
 
+-- Adds a comment for the 'user_email' column
 COMMENT ON COLUMN public.users.user_email
-    IS 'Correo electronico del Usuario para el login';
+    IS 'User email for login';
 
+-- Adds a comment for the 'user_password' column
 COMMENT ON COLUMN public.users.user_password
-    IS 'Password de usuario para login';
+    IS 'User password for login';
 
+-- Adds a comment for the 'user_type_identifier' column
 COMMENT ON COLUMN public.users.user_type_identifier
-    IS 'Tipo de documento de identificacion del usuario';
+    IS 'User identification document type';
+
 
 -- CREATE TABLE PRODUCTS
 -- -- Table: public.products
 
 -- DROP TABLE public.products;
 
+-- Creates a table for storing product information
 CREATE TABLE public.products
 (
     product_id integer NOT NULL,
@@ -93,26 +108,31 @@ CREATE TABLE public.products
 
 TABLESPACE pg_default;
 
+-- Sets the owner of the table to 'postgres'
+ALTER TABLE public.products
+    OWNER to postgres;
+
+-- Comments for the columns in the 'products' table
 ALTER TABLE public.products
     OWNER to postgres;
 
 COMMENT ON COLUMN public.products.product_id
-    IS 'id del producto';
+    IS 'Product ID';
 
 COMMENT ON COLUMN public.products.product_name
-    IS 'Name del producto';
+    IS 'Product name';
 
 COMMENT ON COLUMN public.products.product_amount
-    IS 'Cantidad del producto';
+    IS 'Product amount';
 
 COMMENT ON COLUMN public.products.product_user_created
-    IS 'El usuario crea un producto';
+    IS 'User create a product';
 
 COMMENT ON COLUMN public.products.product_date_created
-    IS 'Fecha de creación del producto';
+    IS 'Date of product created';
 
 COMMENT ON COLUMN public.products.product_date_modify
-    IS 'Fecha de  modificación del producto';
+    IS 'Date of product modification';
 
 COMMENT ON COLUMN public.products."product_user_modify"
-    IS 'Fecha de modificación del user';
+    IS 'Date of user modification';
