@@ -13,7 +13,7 @@ type sqlProductRepo struct {
 	Conn *database.DataDB
 }
 
-//NewProductRepository aaa
+//NewProductRepository Should initialize the dependencies for this service.
 func NewProductRepository(Conn *database.DataDB) repoDomain.ProductRepository {
 	return &sqlProductRepo{
 		Conn: Conn,

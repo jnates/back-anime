@@ -45,28 +45,9 @@ func JSON(w http.ResponseWriter, r *http.Request, statusCode int, data interface
 	return nil
 }
 
-// JSONMessages standardized successfully response in JSON format.
-func JSONMessages(w http.ResponseWriter, r *http.Request, statusCode int, message string) error {
-	msg := SuccessfullyMessage{
-		Status:  statusCode,
-		Message: message,
-	}
-	return JSON(w, r, statusCode, msg)
-}
-
 // HTTPError standardized error response in JSON format.
 func HTTPError(w http.ResponseWriter, r *http.Request, statusCode int, error string, message string) error {
 	msg := ErrorMessage{
-		Status:  statusCode,
-		Error:   error,
-		Message: message,
-	}
-	return JSON(w, r, statusCode, msg)
-}
-
-// HTTPErrors standardized errors response in JSON format.
-func HTTPErrors(w http.ResponseWriter, r *http.Request, statusCode int, error string, message interface{}) error {
-	msg := ErrorsMessage{
 		Status:  statusCode,
 		Error:   error,
 		Message: message,
