@@ -23,7 +23,7 @@ func NewProductHandler(db *database.DataDB) *ProductRouter {
 	}
 }
 
-// CreateProductHandler creamos el handler del insert products
+// CreateProductHandler Created initialize handler product.
 func (prod *ProductRouter) CreateProductHandler(w http.ResponseWriter, r *http.Request) {
 	var product model.Product
 	ctx := r.Context()
