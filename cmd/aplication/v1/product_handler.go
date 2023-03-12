@@ -11,7 +11,7 @@ import (
 	"net/http"
 )
 
-//ProductRouter rutas
+//ProductRouter router
 type ProductRouter struct {
 	Repo repoDomain.ProductRepository
 }
@@ -39,4 +39,24 @@ func (prod *ProductRouter) CreateProductHandler(w http.ResponseWriter, r *http.R
 	}
 	w.Header().Add("Location", fmt.Sprintf("%s%s", r.URL.String(), result))
 	_ = middleware.JSON(w, r, http.StatusCreated, result)
+}
+
+
+func (prod *ProductRouter) GetProductHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		id := r.URL.Query().Get("id")
+		productResponse, err := prod.Repo.GetProductHandler(r.Context(), id)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		jsonBytes, err := json.Marshal(productResponse)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write(jsonBytes)
+	}
 }

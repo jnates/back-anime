@@ -9,9 +9,5 @@ import (
 //ProductRepository interfaces handlers products
 type ProductRepository interface {
 	CreateProductHandler(ctx context.Context, product *model.Product) (*response.ProductCreateResponse, error)
+	GetProductHandler(ctx context.Context, id string) (*response.ProductResponse, error)
 }
-
-//// GetAllProducts es la interfaz que define el método para obtener todos los productos.
-//type GetAllProducts interface {
-//	GetAllProductsHandler(ctx context.Context) (*response.ProductGetResponse, error)
-//}

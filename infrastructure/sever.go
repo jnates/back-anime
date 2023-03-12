@@ -1,17 +1,15 @@
 package infrastructure
 
 import (
+	"backend_crudgo/infrastructure/database"
 	"context"
+	"github.com/go-chi/chi"
+	chiMiddleware "github.com/go-chi/chi/middleware"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
-
-	"backend_crudgo/infrastructure/database"
-
-	"github.com/go-chi/chi"
-	chiMiddleware "github.com/go-chi/chi/middleware"
 )
 
 // Server is a base Server configuration.
@@ -66,7 +64,7 @@ func (srv *Server) gracefulShutdown() {
 	log.Printf("cmd stopped")
 }
 
-//Start aa
+//Start initialize server
 func (srv *Server) Start() {
 	log.Println("starting API cmd")
 
@@ -81,13 +79,10 @@ func (srv *Server) Start() {
 
 //Start aa
 func Start(port string) {
-
 	// connection to the database.
 	db := database.New()
 	defer db.DB.Close()
-
 	server := newServer(port, db)
-
 	// start the server.
 	server.Start()
 }

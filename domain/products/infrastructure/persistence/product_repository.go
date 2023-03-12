@@ -38,26 +38,25 @@ func (sr *sqlProductRepo) CreateProductHandler(ctx context.Context, product *mod
 	return &ProductResponse, nil
 }
 
-//func (sr *sqlProductRepo) GetProductByIDHandler(ctx context.Context, productID string) (*response.ProductResponse, error) {
-//	stmt, err := sr.Conn.DB.PrepareContext(ctx, SelectProductByID)
-//	if err != nil {
-//		return &response.ProductResponse{}, err
-//	}
-//	defer stmt.Close()
-//	product := &model.Product{}
-//	row := stmt.QueryRowContext(ctx, productID)
-//	err = row.Scan(&product.ProductID, &product.ProductName, &product.ProductAmount, &product.ProductUserCreated, &product.ProductDateCreated, &product.ProductUserModify, &product.ProductDateModify)
-//	if err != nil {
-//		if err == sql.ErrNoRows {
-//			return &response.ProductResponse{
-//				Message: fmt.Sprintf("Product with ID %s not found", productID),
-//			}, nil
-//		} else {
-//			return &response.ProductResponse{}, err
-//		}
-//	}
-//	productResp := response.ProductResponse{
-//		Product: product,
-//	}
-//	return &productResp, nil
-//}
+func (sr *sqlProductRepo) GetProductHandler(ctx context.Context, id string) (*response.ProductResponse, error) {
+	stmt, err := sr.Conn.DB.PrepareContext(ctx, SelectProduct)
+	if err != nil {
+		return &response.ProductResponse{}, err
+	}
+	defer stmt.Close()
+
+	row := stmt.QueryRowContext(ctx, id)
+	product := &model.Product{}
+	err = row.Scan(&product.ProductID, &product.ProductName, &product.ProductAmount, &product.ProductUserCreated, &product.ProductDateCreated, &product.ProductUserModify,
+		&product.ProductDateModify)
+	if err != nil {
+		return &response.ProductResponse{Error: err.Error()}, err
+	}
+
+	productResponse := &response.ProductResponse{
+		Message: "get product success",
+		Product: product,
+	}
+
+	return productResponse, nil
+}

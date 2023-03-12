@@ -41,7 +41,10 @@ func JSON(w http.ResponseWriter, r *http.Request, statusCode int, data interface
 	}
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(statusCode)
-	_, _ = w.Write(j)
+	_, err = w.Write(j)
+	if err != nil{
+		return err
+	}
 	return nil
 }
 
