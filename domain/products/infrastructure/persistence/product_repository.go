@@ -38,18 +38,25 @@ func (sr *sqlProductRepo) CreateProductHandler(ctx context.Context, product *mod
 	return &ProductResponse, nil
 }
 
-// func (sr *sqlProductRepo) GetAllProducts(ctx context.Context, product *model.Product) (*response.ProductALLResponse, error) {
-// 	stmt, err := sr.Conn.DB.PrepareContext(ctx, insertProduct)
-// 	if err != nil {
-// 		return &response.ProductALLResponse{}, err
-// 	}
-// 	defer stmt.Close()
-// 	row := stmt.QueryRowContext(ctx, &product.ProductoID, &product.ProductoNombre, &product.ProductoCantidad, &product.ProductoUsercreacion, &product.ProductoUserModificacion)
-// 	var idResult string
-// 	err = row.Scan(&idResult)
-// 	if err != sql.ErrNoRows {
-// 		return &response.ProductALLResponse{}, err
-// 	}
-// 	ProductAllResponse :=  [] response.ProductCreateResponse{}
-// 	return &[]ProductAllResponse, nil
-// }
+func (sr *sqlProductRepo) GetProductHandler(ctx context.Context, id string) (*response.ProductResponse, error) {
+	stmt, err := sr.Conn.DB.PrepareContext(ctx, SelectProduct)
+	if err != nil {
+		return &response.ProductResponse{}, err
+	}
+	defer stmt.Close()
+
+	row := stmt.QueryRowContext(ctx, id)
+	product := &model.Product{}
+	err = row.Scan(&product.ProductID, &product.ProductName, &product.ProductAmount, &product.ProductUserCreated, &product.ProductDateCreated, &product.ProductUserModify,
+		&product.ProductDateModify)
+	if err != nil {
+		return &response.ProductResponse{Error: err.Error()}, err
+	}
+
+	productResponse := &response.ProductResponse{
+		Message: "get product success",
+		Product: product,
+	}
+
+	return productResponse, nil
+}
