@@ -1,14 +1,15 @@
 package v1
 
 import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+
 	"backend_crudgo/domain/products/domain/model"
 	repoDomain "backend_crudgo/domain/products/domain/repository"
 	"backend_crudgo/domain/products/infrastructure/persistence"
 	"backend_crudgo/infrastructure/database"
 	"backend_crudgo/infrastructure/middleware"
-	"encoding/json"
-	"fmt"
-	"net/http"
 )
 
 //ProductRouter router
@@ -40,7 +41,6 @@ func (prod *ProductRouter) CreateProductHandler(w http.ResponseWriter, r *http.R
 	w.Header().Add("Location", fmt.Sprintf("%s%s", r.URL.String(), result))
 	_ = middleware.JSON(w, r, http.StatusCreated, result)
 }
-
 
 func (prod *ProductRouter) GetProductHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {

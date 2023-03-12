@@ -8,7 +8,7 @@ type ProductCreateResponse struct {
 }
 
 type ProductResponse struct {
-	Message string        `json:"message"`
+	Message string         `json:"message"`
 	Product *model.Product `json:"product,omitempty"`
-	Error   string        `json:"error,omitempty"`
+	Error   string         `json:"error,omitempty"`
 }

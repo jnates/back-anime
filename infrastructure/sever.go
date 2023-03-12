@@ -3,13 +3,14 @@ package infrastructure
 import (
 	"backend_crudgo/infrastructure/database"
 	"context"
-	"github.com/go-chi/chi"
-	chiMiddleware "github.com/go-chi/chi/middleware"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
+
+	"github.com/go-chi/chi"
+	chiMiddleware "github.com/go-chi/chi/middleware"
 )
 
 // Server is a base Server configuration.
