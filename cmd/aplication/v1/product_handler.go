@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	ID = "id"
+	ID       = "id"
 	LOCATION = "Location"
 )
 

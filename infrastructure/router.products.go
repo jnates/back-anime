@@ -1,7 +1,7 @@
 package infrastructure
 
 import (
-	"backend_crudgo/cmd/aplication/v1"
+	v1 "backend_crudgo/cmd/aplication/v1"
 	"backend_crudgo/infrastructure/database"
 	"net/http"
 

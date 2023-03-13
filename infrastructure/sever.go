@@ -82,7 +82,7 @@ func (srv *Server) Start() {
 func Start(port string) {
 	// connection to the database.
 	db, err := database.New()
-	if err != nil{
+	if err != nil {
 		defer db.DB.Close()
 		return
 	}
