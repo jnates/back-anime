@@ -12,6 +12,11 @@ import (
 	"backend_crudgo/infrastructure/middleware"
 )
 
+const (
+	ID       = "id"
+	LOCATION = "Location"
+)
+
 //ProductRouter router
 type ProductRouter struct {
 	Repo repoDomain.ProductRepository
@@ -30,7 +35,7 @@ func (prod *ProductRouter) CreateProductHandler(w http.ResponseWriter, r *http.R
 	ctx := r.Context()
 	err := json.NewDecoder(r.Body).Decode(&product)
 	if err != nil {
-		_ = middleware.HTTPError(w, r, http.StatusBadRequest, "bad request", err.Error())
+		_ = middleware.HTTPError(w, r, http.StatusBadRequest, "Bad request", err.Error())
 		return
 	}
 	result, err := prod.Repo.CreateProductHandler(ctx, &product)
@@ -38,25 +43,24 @@ func (prod *ProductRouter) CreateProductHandler(w http.ResponseWriter, r *http.R
 		_ = middleware.HTTPError(w, r, http.StatusConflict, "Conflict", err.Error())
 		return
 	}
-	w.Header().Add("Location", fmt.Sprintf("%s%s", r.URL.String(), result))
+	w.Header().Add(LOCATION, fmt.Sprintf("%s%s", r.URL.String(), result))
 	_ = middleware.JSON(w, r, http.StatusCreated, result)
 }
 
-func (prod *ProductRouter) GetProductHandler() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		id := r.URL.Query().Get("id")
-		productResponse, err := prod.Repo.GetProductHandler(r.Context(), id)
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-		jsonBytes, err := json.Marshal(productResponse)
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		w.Write(jsonBytes)
+// GetProductHandler Created initialize get product.
+func (prod *ProductRouter) GetProductHandler(w http.ResponseWriter, r *http.Request) {
+	id := r.URL.Query().Get(ID)
+	productResponse, err := prod.Repo.GetProductHandler(r.Context(), id)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
+	jsonBytes, err := json.Marshal(productResponse)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonBytes)
 }

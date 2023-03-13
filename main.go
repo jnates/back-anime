@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	log.Println("starting API cmd")
+	log.Println("Starting API CMD")
 	port := os.Getenv("API_PORT")
 	infrastructure.Start(port)
 }

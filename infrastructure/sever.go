@@ -53,7 +53,7 @@ func (srv *Server) gracefulShutdown() {
 
 	signal.Notify(quit, os.Interrupt)
 	sig := <-quit
-	log.Printf("cmd is shutting down %s", sig.String())
+	log.Printf("CMD is shutting down %s", sig.String())
 
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
@@ -62,27 +62,30 @@ func (srv *Server) gracefulShutdown() {
 	if err := srv.Shutdown(ctx); err != nil {
 		log.Fatalf("could not gracefully shutdown the cmd %s", err.Error())
 	}
-	log.Printf("cmd stopped")
+	log.Printf("CMD Stopped")
 }
 
 //Start initialize server
 func (srv *Server) Start() {
-	log.Println("starting API cmd")
+	log.Println("Starting API cmd")
 
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("could not listen on %s rv due to %s rv", srv.Addr, err.Error())
+			log.Fatalf("Could not listen on %s rv due to %s rv", srv.Addr, err.Error())
 		}
 	}()
-	log.Printf("cmd is ready to handle requests %s", srv.Addr)
+	log.Printf("CMD is ready to handle requests %s", srv.Addr)
 	srv.gracefulShutdown()
 }
 
 //Start aa
 func Start(port string) {
 	// connection to the database.
-	db := database.New()
-	defer db.DB.Close()
+	db, err := database.New()
+	if err != nil {
+		defer db.DB.Close()
+		return
+	}
 	server := newServer(port, db)
 	// start the server.
 	server.Start()

@@ -33,7 +33,7 @@ func (sr *sqlProductRepo) CreateProductHandler(ctx context.Context, product *mod
 		return &response.ProductCreateResponse{}, err
 	}
 	ProductResponse := response.ProductCreateResponse{
-		Message: "product created",
+		Message: "Product created",
 	}
 	return &ProductResponse, nil
 }
@@ -54,7 +54,7 @@ func (sr *sqlProductRepo) GetProductHandler(ctx context.Context, id string) (*re
 	}
 
 	productResponse := &response.ProductResponse{
-		Message: "get product success",
+		Message: "Get product success",
 		Product: product,
 	}
 

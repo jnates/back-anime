@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -28,7 +29,6 @@ type SuccessfullyMessage struct {
 // Map is a convenient way to create objects of unknown types.
 type Map map[string]interface{}
 
-// JSON standardized JSON response.
 func JSON(w http.ResponseWriter, r *http.Request, statusCode int, data interface{}) error {
 	if data == nil {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -41,10 +41,14 @@ func JSON(w http.ResponseWriter, r *http.Request, statusCode int, data interface
 	}
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(statusCode)
-	_, err = w.Write(j)
+	n, err := w.Write(j)
 	if err != nil {
 		return err
 	}
+	if n != len(j) {
+		return fmt.Errorf(" Error writing response body: wrote %d bytes out of %d", n, len(j))
+	}
+
 	return nil
 }
 
