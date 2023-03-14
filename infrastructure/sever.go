@@ -1,16 +1,18 @@
 package infrastructure
 
 import (
-	"backend_crudgo/infrastructure/database"
 	"context"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
 
+	"backend_crudgo/infrastructure/database"
+	"backend_crudgo/infrastructure/kit/enum"
+
 	"github.com/go-chi/chi"
 	chiMiddleware "github.com/go-chi/chi/middleware"
+	"github.com/rs/zerolog/log"
 )
 
 // Server is a base Server configuration.
@@ -35,7 +37,7 @@ func newServer(port string, conn *database.DataDB) *Server {
 	// router.Use(middleware.CORSMiddleware)
 
 	//default path to be used in the health checker
-	router.Mount("/", RoutesProducts(conn))
+	router.Mount(enum.BasePath, RoutesProducts(conn))
 
 	s := &http.Server{
 		Addr:         ":" + port,
@@ -53,39 +55,48 @@ func (srv *Server) gracefulShutdown() {
 
 	signal.Notify(quit, os.Interrupt)
 	sig := <-quit
-	log.Printf("CMD is shutting down %s", sig.String())
+	log.Info().Msgf("CMD is shutting down %s", sig.String())
 
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
 	srv.SetKeepAlivesEnabled(false)
 	if err := srv.Shutdown(ctx); err != nil {
-		log.Fatalf("could not gracefully shutdown the cmd %s", err.Error())
+		log.Fatal().Msgf("could not gracefully shutdown the cmd %s", err.Error())
 	}
-	log.Printf("CMD Stopped")
+
+	log.Info().Msg("CMD Stopped")
 }
 
-//Start initialize server
+// Start initialize server
 func (srv *Server) Start() {
-	log.Println("Starting API cmd")
+	log.Info().Msg("Starting API cmd")
 
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("Could not listen on %s rv due to %s rv", srv.Addr, err.Error())
+			log.Fatal().Msgf("Could not listen on %s rv due to %s rv", srv.Addr, err.Error())
 		}
 	}()
-	log.Printf("CMD is ready to handle requests %s", srv.Addr)
+
+	log.Info().Msgf("CMD is ready to handle requests %s", srv.Addr)
 	srv.gracefulShutdown()
 }
 
-//Start aa
+// Start aa
 func Start(port string) {
 	// connection to the database.
 	db, err := database.New()
 	if err != nil {
-		defer db.DB.Close()
 		return
 	}
+
+	defer func() {
+		err = db.DB.Close()
+		if err != nil {
+			log.Fatal().Msgf("Could not close BD : [error] %s", err.Error())
+		}
+	}()
+
 	server := newServer(port, db)
 	// start the server.
 	server.Start()

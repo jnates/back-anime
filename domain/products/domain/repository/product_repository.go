@@ -1,9 +1,10 @@
 package repository
 
 import (
+	"context"
+
 	"backend_crudgo/domain/products/domain/model"
 	response "backend_crudgo/types"
-	"context"
 )
 
 //ProductRepository interfaces handlers products

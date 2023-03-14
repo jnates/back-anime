@@ -3,11 +3,12 @@ package database
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"os"
 
 	// registering database driver
 	_ "github.com/lib/pq"
+
+	"github.com/rs/zerolog/log"
 )
 
 // New returns a new instance of Data with the database connection ready.
@@ -39,10 +40,10 @@ func getConnection() (*sql.DB, error) {
 		return nil, err
 	}
 
-	if err := db.Ping(); err != nil {
+	if err = db.Ping(); err != nil {
 		return nil, err
 	}
 
-	log.Println("Connected to database")
+	log.Info().Msg("Connected to database")
 	return db, nil
 }

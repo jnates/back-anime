@@ -35,16 +35,20 @@ func JSON(w http.ResponseWriter, r *http.Request, statusCode int, data interface
 		w.WriteHeader(statusCode)
 		return nil
 	}
+
 	j, err := json.Marshal(data)
 	if err != nil {
 		return err
 	}
+
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(statusCode)
+
 	n, err := w.Write(j)
 	if err != nil {
 		return err
 	}
+
 	if n != len(j) {
 		return fmt.Errorf(" Error writing response body: wrote %d bytes out of %d", n, len(j))
 	}
@@ -59,5 +63,6 @@ func HTTPError(w http.ResponseWriter, r *http.Request, statusCode int, error str
 		Error:   error,
 		Message: message,
 	}
+
 	return JSON(w, r, statusCode, msg)
 }
