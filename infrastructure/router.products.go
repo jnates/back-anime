@@ -1,14 +1,15 @@
 package infrastructure
 
 import (
-	v1 "backend_crudgo/cmd/aplication/v1"
-	"backend_crudgo/infrastructure/database"
 	"net/http"
+
+	"backend_crudgo/domain/products/domain/handler/v1"
+	"backend_crudgo/infrastructure/database"
 
 	"github.com/go-chi/chi"
 )
 
-//RoutesProducts aa
+// RoutesProducts aa
 func RoutesProducts(conn *database.DataDB) http.Handler {
 	router := chi.NewRouter()
 	products := v1.NewProductHandler(conn) //domain
@@ -16,7 +17,7 @@ func RoutesProducts(conn *database.DataDB) http.Handler {
 	return router
 }
 
-//Router user
+// Router user
 func routesProduct(handler *v1.ProductRouter) http.Handler {
 	router := chi.NewRouter()
 	router.Post("/", handler.CreateProductHandler)
