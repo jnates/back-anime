@@ -1,10 +1,9 @@
 package infrastructure
 
 import (
-	"net/http"
-
-	"backend_crudgo/domain/products/domain/handler/v1"
+	v1 "backend_crudgo/domain/products/domain/handler/v1"
 	"backend_crudgo/infrastructure/database"
+	"net/http"
 
 	"github.com/go-chi/chi"
 )

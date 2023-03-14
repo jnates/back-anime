@@ -1,6 +1,7 @@
 .PHONY: modd
 modd:
 	go mod download
+	go mod tidy
 
 .PHONY: go-test
 go-test:
@@ -15,7 +16,8 @@ lint:
 	golangci-lint -v run
 
 lint-install:
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(shell go env GOPATH)/bin
+	curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(GOPATH)/bin v1.51.2
+
 
 lint-install-apple-silicon:
 	brew install golangci-lint

@@ -7,7 +7,6 @@ import (
 
 	// registering database driver
 	_ "github.com/lib/pq"
-
 	"github.com/rs/zerolog/log"
 )
 

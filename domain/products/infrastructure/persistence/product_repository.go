@@ -5,9 +5,9 @@ import (
 	repoDomain "backend_crudgo/domain/products/domain/repository"
 	"backend_crudgo/infrastructure/database"
 	response "backend_crudgo/types"
-
 	"context"
 	"database/sql"
+
 	"github.com/rs/zerolog/log"
 )
 

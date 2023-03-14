@@ -1,9 +1,8 @@
 package main
 
 import (
-	"os"
-
 	"backend_crudgo/infrastructure"
+	"os"
 
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/rs/zerolog/log"
